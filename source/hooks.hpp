@@ -53,5 +53,8 @@ namespace hooks {
     inline void(__thiscall* PlayLayer_onExit)(PlayLayer*);
     inline void __fastcall PlayLayer_onExit_H(PlayLayer* self);
 
+    inline void(__thiscall* PlayLayer_resetLevel)(PlayLayer*);
+    inline void __fastcall PlayLayer_resetLevel_H(PlayLayer* self);
+
     void init();
 }
