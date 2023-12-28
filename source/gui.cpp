@@ -9,6 +9,7 @@
 #include <gl/GL.h>
 #include "startposSwitcher.hpp"
 #include "smartStartpos.hpp"
+#include "replayEngine.hpp"
 
 bool gui::show = false;
 bool gui::inited = false;
@@ -209,6 +210,10 @@ void gui::Render()
 
         ImGui::End();
     }
+
+    // if (playLayer != nullptr) {
+    //     Console::WriteLine(std::to_string(*(double*)(playLayer + 0x328)));
+    // }
 }
 
 void gui::Toggle()
