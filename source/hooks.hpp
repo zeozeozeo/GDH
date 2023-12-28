@@ -56,5 +56,12 @@ namespace hooks {
     inline void(__thiscall* PlayLayer_resetLevel)(PlayLayer*);
     inline void __fastcall PlayLayer_resetLevel_H(PlayLayer* self);
 
+    inline void*(__thiscall* PlayLayer_createCheckpoint)(PlayLayer*);
+    inline void* __fastcall PlayLayer_createCheckpoint_H(PlayLayer* self);
+
+    inline bool(__thiscall* PlayLayer_removeCheckpoint)(PlayLayer*, int, bool);
+    inline bool __fastcall PlayLayer_removeCheckpoint_H(PlayLayer* self, int edx, bool a2);
+
+
     void init();
 }

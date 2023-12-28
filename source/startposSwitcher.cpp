@@ -1,15 +1,13 @@
 #include "startposSwitcher.hpp"
 #include "smartStartpos.hpp"
+#include "hooks.hpp"
 
 namespace startposSwitcher
 {
     void(__thiscall *resetLevel)(void *) = nullptr;
     void(__thiscall *setStartPosObject)(void *, void *) = nullptr;
-    void(__thiscall *playLayerInit)(void *) = nullptr;
     void(__thiscall *startposObjectInit)(void *) = nullptr;
-    void(__thiscall *playLayerDestructor)(void *) = nullptr;
 
-    void *playLayer = nullptr;
     std::vector<float *> startposObjects;
     int startposIndex = -1;
     float tmp[] = {0, 0};
@@ -23,19 +21,11 @@ namespace startposSwitcher
         startposObjectInit(self);
     }
 
-    void __fastcall playLayerInitHook(void *self, void *_)
+    void restartLevelCallback()
     {
         startposObjects = {};
         startposIndex = 0;
-        playLayer = self;
         smartStartpos::resetObjects();
-        playLayerInit(self);
-    }
-
-    void __fastcall playLayerDestructorHook(void *self, void *_)
-    {
-        playLayer = nullptr;
-        playLayerDestructor(self);
     }
 
     void init()
@@ -43,8 +33,6 @@ namespace startposSwitcher
         uintptr_t base = (uintptr_t)GetModuleHandleA(0);
 
         MH_CreateHook((LPVOID)(base + 0x3A0D10), startposObjectInitHook, (LPVOID *)&startposObjectInit);
-        MH_CreateHook((LPVOID)(base + 0x18CC80), playLayerInitHook, (LPVOID *)&playLayerInit);
-        MH_CreateHook((LPVOID)(base + 0x2D6580), playLayerDestructorHook, (LPVOID *)&playLayerDestructor);
         resetLevel = (decltype(resetLevel))(base + 0x2E42B0);
         setStartPosObject = (decltype(setStartPosObject))(base + 0x195FC0);
     }

@@ -210,11 +210,6 @@ void gui::Render()
 
         ImGui::End();
     }
-
-    if (playLayer != nullptr) {
-        const auto time = *(double*)(((char*)playLayer) + 0x328);
-        Console::WriteLine(std::to_string(time));
-    }
 }
 
 void gui::Toggle()
